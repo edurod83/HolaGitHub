@@ -1,0 +1,23 @@
+# Entorno virtual
+venv/
+.env/
+.venv/
+
+# Caché de Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Caché de pytest
+.pytest_cache/
+
+# Caché de mypy
+.mypy_cache/
+
+# Distribución / empaquetado
+dist/
+build/
+*.egg-info/
+
+# Variables de entorno
+.env
