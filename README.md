@@ -1,6 +1,16 @@
-# Web de Ciclismo Número 1
+# VeloNoticias – La web de ciclismo número 1 en el mundo
 
-Aplicación web simple desarrollada en **Python** con **Flask** que muestra un mensaje de bienvenida al acceder a la raíz del sitio.
+Aplicación web desarrollada en **Python** con **Flask** que simula un portal de noticias de ciclismo. Muestra una portada con noticias ficticias, ranking UCI, próximas carreras y breves, usando plantillas Jinja2 y estilos CSS integrados.
+
+## Capturas
+
+La portada incluye:
+
+- **Header** con logo, eslogan y menú de navegación
+- **Ticker de última hora** animado
+- **Noticia destacada** con extracto completo
+- **Cuadrícula de noticias** con tarjetas interactivas
+- **Sidebar** con ranking UCI World Tour, próximas carreras y breves
 
 ## Estructura del proyecto
 
@@ -9,9 +19,11 @@ HolaGitHub/
 ├── .github/
 │   └── workflows/
 │       └── github-pipeline.yml  # Pipeline CI/CD (GitHub Actions)
+├── templates/
+│   └── index.html               # Plantilla Jinja2 de la portada
 ├── test/
 │   └── test_app.py              # Tests con pytest
-├── app.py                       # Aplicación Flask
+├── app.py                       # Aplicación Flask + datos ficticios
 ├── conftest.py                  # Configuración de pytest
 ├── Dockerfile                   # Imagen Docker
 ├── requirements.txt             # Dependencias Python
@@ -41,10 +53,14 @@ python app.py
 
 La app estará disponible en: [http://localhost:5000](http://localhost:5000)
 
-Respuesta esperada:
-```
-Hola, bienvenido a la web de ciclismo número 1 en el mundo!
-```
+La portada renderiza la plantilla `templates/index.html` con los datos definidos en `app.py`:
+
+| Variable | Contenido |
+|---|---|
+| `noticias` | Lista de 6 noticias ficticias con título, extracto, categoría, autor y fecha |
+| `ranking` | Top 7 del ranking UCI World Tour |
+| `proximas_carreras` | 5 próximas carreras del calendario |
+| `breves` | 5 noticias cortas de última hora |
 
 ## Ejecutar los tests
 
