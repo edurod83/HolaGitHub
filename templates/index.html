@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VeloNoticias – La web de ciclismo número 1 en el mundo</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --rojo:    #c0392b;
+            --rojo-os: #922b21;
+            --gris-cl: #f4f4f4;
+            --gris-md: #ddd;
+            --gris-os: #555;
+            --negro:   #1a1a1a;
+            --blanco:  #ffffff;
+        }
+
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--gris-cl); color: var(--negro); }
+
+        /* ── HEADER ─────────────────────────────────────────── */
+        header {
+            background: var(--negro);
+            padding: 0 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: .5rem;
+            border-bottom: 4px solid var(--rojo);
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: .6rem;
+            padding: .8rem 0;
+            text-decoration: none;
+        }
+        .logo-icon { font-size: 2rem; }
+        .logo-text { color: var(--blanco); font-size: 1.6rem; font-weight: 800; letter-spacing: 1px; }
+        .logo-text span { color: var(--rojo); }
+        .tagline { color: #aaa; font-size: .75rem; letter-spacing: 2px; text-transform: uppercase; }
+
+        nav { display: flex; gap: .2rem; flex-wrap: wrap; padding: .4rem 0; }
+        nav a {
+            color: #ccc;
+            text-decoration: none;
+            font-size: .85rem;
+            font-weight: 600;
+            padding: .4rem .8rem;
+            border-radius: 3px;
+            transition: background .2s, color .2s;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+        }
+        nav a:hover, nav a.active { background: var(--rojo); color: var(--blanco); }
+
+        /* ── BREAKING NEWS BAR ──────────────────────────────── */
+        .breaking {
+            background: var(--rojo);
+            color: var(--blanco);
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            font-size: .82rem;
+            font-weight: 600;
+        }
+        .breaking-label {
+            background: var(--rojo-os);
+            padding: .45rem 1rem;
+            white-space: nowrap;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            flex-shrink: 0;
+        }
+        .breaking-ticker {
+            padding: .45rem 1.5rem;
+            white-space: nowrap;
+            animation: ticker 30s linear infinite;
+        }
+        @keyframes ticker {
+            0%   { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* ── MAIN LAYOUT ────────────────────────────────────── */
+        .container { max-width: 1200px; margin: 0 auto; padding: 1.5rem; }
+        .layout { display: grid; grid-template-columns: 1fr 300px; gap: 1.5rem; }
+        @media (max-width: 800px) { .layout { grid-template-columns: 1fr; } }
+
+        /* ── SECTION TITLE ──────────────────────────────────── */
+        .section-title {
+            font-size: 1rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--rojo);
+            border-left: 4px solid var(--rojo);
+            padding-left: .6rem;
+            margin-bottom: 1rem;
+        }
+
+        /* ── FEATURED ARTICLE ───────────────────────────────── */
+        .featured {
+            background: var(--blanco);
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,.12);
+            margin-bottom: 1.5rem;
+            cursor: pointer;
+            transition: box-shadow .2s;
+        }
+        .featured:hover { box-shadow: 0 6px 20px rgba(0,0,0,.18); }
+        .featured-img {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+            display: block;
+            background: linear-gradient(135deg, #c0392b 0%, #1a1a1a 100%);
+            position: relative;
+        }
+        .featured-img-placeholder {
+            width: 100%;
+            height: 320px;
+            background: linear-gradient(135deg, #922b21 0%, #1a1a1a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+        }
+        .featured-body { padding: 1.2rem 1.5rem 1.5rem; }
+        .featured-cat {
+            display: inline-block;
+            background: var(--rojo);
+            color: var(--blanco);
+            font-size: .7rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: .2rem .6rem;
+            border-radius: 3px;
+            margin-bottom: .6rem;
+        }
+        .featured-title { font-size: 1.6rem; font-weight: 800; line-height: 1.3; margin-bottom: .6rem; }
+        .featured-title:hover { color: var(--rojo); cursor: pointer; }
+        .featured-excerpt { color: var(--gris-os); font-size: .95rem; line-height: 1.6; margin-bottom: .8rem; }
+        .featured-meta { font-size: .78rem; color: #999; display: flex; gap: 1rem; flex-wrap: wrap; }
+        .featured-meta strong { color: var(--gris-os); }
+
+        /* ── NEWS GRID ──────────────────────────────────────── */
+        .news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+
+        .card {
+            background: var(--blanco);
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 2px 6px rgba(0,0,0,.09);
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            transition: box-shadow .2s, transform .2s;
+        }
+        .card:hover { box-shadow: 0 6px 18px rgba(0,0,0,.15); transform: translateY(-3px); }
+        .card-img-placeholder {
+            height: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+        .card-body { padding: .9rem 1rem 1.1rem; flex: 1; display: flex; flex-direction: column; gap: .4rem; }
+        .card-cat {
+            font-size: .65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--rojo);
+        }
+        .card-title { font-size: 1rem; font-weight: 700; line-height: 1.35; }
+        .card-title:hover { color: var(--rojo); }
+        .card-excerpt { font-size: .82rem; color: var(--gris-os); line-height: 1.55; flex: 1; }
+        .card-meta { font-size: .73rem; color: #aaa; margin-top: auto; padding-top: .4rem; border-top: 1px solid var(--gris-md); }
+
+        /* ── SIDEBAR ────────────────────────────────────────── */
+        .sidebar { display: flex; flex-direction: column; gap: 1.2rem; }
+
+        .widget {
+            background: var(--blanco);
+            border-radius: 6px;
+            padding: 1rem 1.1rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,.09);
+        }
+        .widget-title {
+            font-size: .85rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 2px solid var(--rojo);
+            padding-bottom: .5rem;
+            margin-bottom: .8rem;
+            color: var(--negro);
+        }
+
+        /* Últimas noticias */
+        .latest-item { display: flex; gap: .7rem; padding: .6rem 0; border-bottom: 1px solid var(--gris-md); }
+        .latest-item:last-child { border-bottom: none; }
+        .latest-icon { font-size: 1.4rem; flex-shrink: 0; padding-top: .1rem; }
+        .latest-text { font-size: .82rem; font-weight: 600; line-height: 1.4; color: var(--negro); cursor: pointer; }
+        .latest-text:hover { color: var(--rojo); }
+        .latest-date { font-size: .7rem; color: #aaa; margin-top: .25rem; }
+
+        /* Clasificación */
+        .ranking-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
+        .ranking-table th { text-align: left; color: #999; font-weight: 600; padding: .3rem .4rem; border-bottom: 1px solid var(--gris-md); }
+        .ranking-table td { padding: .4rem .4rem; border-bottom: 1px solid var(--gris-md); vertical-align: middle; }
+        .ranking-table tr:last-child td { border-bottom: none; }
+        .rank-num { font-weight: 800; color: var(--rojo); width: 22px; }
+        .rank-flag { font-size: 1rem; }
+        .rank-pts { font-weight: 700; }
+
+        /* Próximas carreras */
+        .race-item { padding: .55rem 0; border-bottom: 1px solid var(--gris-md); display: flex; gap: .7rem; align-items: flex-start; }
+        .race-item:last-child { border-bottom: none; }
+        .race-date-box {
+            background: var(--rojo);
+            color: var(--blanco);
+            border-radius: 4px;
+            text-align: center;
+            padding: .3rem .5rem;
+            min-width: 44px;
+            flex-shrink: 0;
+        }
+        .race-day { font-size: 1.1rem; font-weight: 800; line-height: 1; }
+        .race-month { font-size: .62rem; text-transform: uppercase; letter-spacing: 1px; }
+        .race-info { font-size: .82rem; }
+        .race-name { font-weight: 700; }
+        .race-cat { color: #999; font-size: .7rem; margin-top: .15rem; }
+
+        /* ── FOOTER ─────────────────────────────────────────── */
+        footer {
+            background: var(--negro);
+            color: #888;
+            text-align: center;
+            padding: 1.5rem;
+            font-size: .8rem;
+            margin-top: 2rem;
+            border-top: 3px solid var(--rojo);
+        }
+        footer strong { color: var(--blanco); }
+    </style>
+</head>
+<body>
+
+<!-- ── HEADER ──────────────────────────────────────────────── -->
+<header>
+    <a class="logo" href="#">
+        <span class="logo-icon">🚴</span>
+        <div>
+            <div class="logo-text">Velo<span>Noticias</span></div>
+            <div class="tagline">La web de ciclismo número 1 en el mundo</div>
+        </div>
+    </a>
+    <nav>
+        <a href="#" class="active">Inicio</a>
+        <a href="#">Grand Tours</a>
+        <a href="#">Clásicas</a>
+        <a href="#">Pista</a>
+        <a href="#">MTB</a>
+        <a href="#">Equipos</a>
+        <a href="#">Resultados</a>
+    </nav>
+</header>
+
+<!-- ── BREAKING NEWS ────────────────────────────────────────── -->
+<div class="breaking">
+    <span class="breaking-label">🔴 Último minuto</span>
+    <span class="breaking-ticker">
+        Pogačar aumenta su ventaja en la general del Giro &nbsp;|&nbsp;
+        Van der Poel confirma su presencia en los Juegos Olímpicos &nbsp;|&nbsp;
+        Nuevo récord de la hora en el velódromo de México &nbsp;|&nbsp;
+        Visma presenta el mayor presupuesto de la historia del ciclismo &nbsp;|&nbsp;
+        Carapaz abandona la Vuelta a Romandía por una caída en la 3.ª etapa
+    </span>
+</div>
+
+<!-- ── MAIN CONTENT ─────────────────────────────────────────── -->
+<div class="container">
+
+    <!-- Saludo original (conservado para compatibilidad) -->
+    <p style="display:none" id="bienvenida">Hola, bienvenido a la web de ciclismo número 1 en el mundo!</p>
+
+    <div class="layout">
+
+        <!-- COLUMNA PRINCIPAL -->
+        <main>
+
+            <p class="section-title">Noticia destacada</p>
+
+            <!-- FEATURED -->
+            {% set feat = noticias[0] %}
+            <article class="featured">
+                <div class="featured-img-placeholder">{{ feat.emoji }}</div>
+                <div class="featured-body">
+                    <span class="featured-cat">{{ feat.categoria }}</span>
+                    <h2 class="featured-title">{{ feat.titulo }}</h2>
+                    <p class="featured-excerpt">{{ feat.extracto }}</p>
+                    <div class="featured-meta">
+                        <span>✍️ <strong>{{ feat.autor }}</strong></span>
+                        <span>📅 {{ feat.fecha }}</span>
+                        <span>⏱ {{ feat.lectura }} min de lectura</span>
+                    </div>
+                </div>
+            </article>
+
+            <p class="section-title">Últimas noticias</p>
+
+            <!-- GRID -->
+            <div class="news-grid">
+                {% for noticia in noticias[1:] %}
+                <article class="card">
+                    <div class="card-img-placeholder" style="background: {{ noticia.color }}">{{ noticia.emoji }}</div>
+                    <div class="card-body">
+                        <span class="card-cat">{{ noticia.categoria }}</span>
+                        <h3 class="card-title">{{ noticia.titulo }}</h3>
+                        <p class="card-excerpt">{{ noticia.extracto }}</p>
+                        <div class="card-meta">✍️ {{ noticia.autor }} &nbsp;|&nbsp; 📅 {{ noticia.fecha }}</div>
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+
+        </main>
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+
+            <!-- Clasificación UCI -->
+            <div class="widget">
+                <p class="widget-title">🏆 Ranking UCI World Tour</p>
+                <table class="ranking-table">
+                    <thead>
+                        <tr><th>#</th><th>Ciclista</th><th>País</th><th>Pts</th></tr>
+                    </thead>
+                    <tbody>
+                        {% for c in ranking %}
+                        <tr>
+                            <td class="rank-num">{{ loop.index }}</td>
+                            <td>{{ c.nombre }}</td>
+                            <td class="rank-flag">{{ c.bandera }}</td>
+                            <td class="rank-pts">{{ c.puntos }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Próximas carreras -->
+            <div class="widget">
+                <p class="widget-title">📅 Próximas Carreras</p>
+                {% for carrera in proximas_carreras %}
+                <div class="race-item">
+                    <div class="race-date-box">
+                        <div class="race-day">{{ carrera.dia }}</div>
+                        <div class="race-month">{{ carrera.mes }}</div>
+                    </div>
+                    <div class="race-info">
+                        <div class="race-name">{{ carrera.nombre }}</div>
+                        <div class="race-cat">{{ carrera.categoria }}</div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Breves -->
+            <div class="widget">
+                <p class="widget-title">⚡ En breve</p>
+                {% for breve in breves %}
+                <div class="latest-item">
+                    <span class="latest-icon">{{ breve.emoji }}</span>
+                    <div>
+                        <div class="latest-text">{{ breve.texto }}</div>
+                        <div class="latest-date">{{ breve.fecha }}</div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+        </aside>
+    </div>
+</div>
+
+<!-- ── FOOTER ───────────────────────────────────────────────── -->
+<footer>
+    <p>© 2026 <strong>VeloNoticias</strong> – Hola, bienvenido a la web de ciclismo número 1 en el mundo!</p>
+    <p style="margin-top:.4rem">Contenido ficticio con fines demostrativos · Todos los derechos reservados</p>
+</footer>
+
+</body>
+</html>

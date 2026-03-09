@@ -61,27 +61,6 @@ Los tests cubren:
 | `test_index_content_type` | El `Content-Type` es `text/html` |
 | `test_ruta_no_existente` | Una ruta desconocida devuelve HTTP 404 |
 
-## Docker
-
-### Construir la imagen
-
-```bash
-docker build -t hola-github .
-```
-
-### Ejecutar el contenedor
-
-```bash
-docker run -p 5000:5000 hola-github
-```
-
-### Publicar en Docker Hub
-
-```bash
-docker login
-docker tag hola-github <TU_USUARIO>/hola-github:latest
-docker push <TU_USUARIO>/hola-github:latest
-```
 
 ## CI/CD con GitHub Actions
 
