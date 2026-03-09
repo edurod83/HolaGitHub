@@ -4,6 +4,7 @@ Aplicación web desarrollada en **Python** con **Flask** que simula un portal de
 
 ## Capturas
 
+
 La portada incluye:
 
 - **Header** con logo, eslogan y menú de navegación
